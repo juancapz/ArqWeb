@@ -1,0 +1,24 @@
+{
+  "name": "arqweb",
+  "version": "1.0.0",
+  "description": "Gestor de vulnerabilidades - Trabajo Practico Aquitectura Web",
+  "main": "server.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juancapz/ArqWeb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/juancapz/ArqWeb/issues"
+  },
+  "homepage": "https://github.com/juancapz/ArqWeb#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
