@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ArqWeb - Reportes</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos específicos del reporte */
+        .report-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .stat-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            border-radius: 6px;
+            border-left: 4px solid;
+        }
+
+        .stat-card.critica { background: #fce4e4; border-color: #c0392b; }
+        .stat-card.alta    { background: #fdecd5; border-color: #d68910; }
+        .stat-card.media   { background: #fdf6e3; border-color: #b7950b; }
+        .stat-card.baja    { background: #d5f5e3; border-color: #1e8449; }
+
+        .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .bar-chart {
+            margin-top: 2rem;
+        }
+
+        .bar-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 50px;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .bar-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .bar-container {
+            height: 24px;
+            background: #f1f3f5;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            transition: width 0.5s ease-out;
+        }
+
+        .bar-fill.critica { background: #c0392b; }
+        .bar-fill.alta    { background: #d68910; }
+        .bar-fill.media   { background: #b7950b; }
+        .bar-fill.baja    { background: #1e8449; }
+
+        .bar-count {
+            text-align: right;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #5a6c7d;
+        }
+
+        .total-banner {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f7fafc;
+            border-radius: 6px;
+            margin-top: 2rem;
+        }
+
+        .total-banner .total-label {
+            font-size: 0.85rem;
+            color: #5a6c7d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+        }
+
+        .total-banner .total-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gestor de Vulnerabilidades</h1>
+        <nav>
+            <a href="index.html">Vulnerabilidades</a>
+            <a href="reports.html" class="active">Reportes</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Distribución de vulnerabilidades por severidad</h2>
+            
+            <div class="report-grid" id="cards-container">
+                <!-- Las 4 cards se generan con JS -->
+            </div>
+
+            <div class="bar-chart" id="bar-chart-container">
+                <!-- Las barras se generan con JS -->
+            </div>
+
+            <div class="total-banner">
+                <div class="total-label">Total de vulnerabilidades</div>
+                <div class="total-value" id="total-value">-</div>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="reports.js"></script>
+</body>
+</html>

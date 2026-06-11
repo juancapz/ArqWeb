@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ArqWeb - Gestor de Vulnerabilidades</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Gestor de Vulnerabilidades</h1>
+        <nav>
+            <a href="index.html" class="active">Vulnerabilidades</a>
+            <a href="reports.html">Reportes</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="filters">
+            <h2>Filtros</h2>
+            <label>
+                Severidad:
+                <select id="filter-severity">
+                    <option value="">Todas</option>
+                    <option value="Crítica">Crítica</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Media">Media</option>
+                    <option value="Baja">Baja</option>
+                </select>
+            </label>
+            <label>
+                Estado:
+                <select id="filter-status">
+                    <option value="">Todos</option>
+                    <option value="Abierta">Abierta</option>
+                    <option value="En progreso">En progreso</option>
+                    <option value="Resuelta">Resuelta</option>
+                </select>
+            </label>
+            <button id="btn-apply-filters">Aplicar filtros</button>
+            <button id="btn-clear-filters">Limpiar</button>
+        </section>
+
+        <section class="list-section">
+            <div class="list-header">
+                <h2>Listado</h2>
+                <button id="btn-new" class="btn-primary">+ Nueva vulnerabilidad</button>
+            </div>
+            <table id="vulnerabilities-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Severidad</th>
+                        <th>Estado</th>
+                        <th>CVE</th>
+                        <th>Asset</th>
+                        <th>Asignado a</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="vulnerabilities-body">
+                    <!-- Las filas se generan dinámicamente con JS -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Modal de formulario para crear/editar -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-title">Nueva vulnerabilidad</h2>
+            <form id="vulnerability-form">
+                <input type="hidden" id="form-id">
+
+                <label>
+                    Título *
+                    <input type="text" id="form-title" required>
+                </label>
+
+                <label>
+                    Descripción
+                    <textarea id="form-description" rows="3"></textarea>
+                </label>
+
+                <label>
+                    CVE
+                    <input type="text" id="form-cve" placeholder="CVE-2024-12345">
+                </label>
+
+                <label>
+                    Severidad *
+                    <select id="form-severity" required>
+                        <option value="">Seleccionar</option>
+                        <option value="Crítica">Crítica</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Media">Media</option>
+                        <option value="Baja">Baja</option>
+                    </select>
+                </label>
+
+                <label>
+                    CVSS Score (0-10)
+                    <input type="number" id="form-cvss" min="0" max="10" step="0.1">
+                </label>
+
+                <label>
+                    Estado
+                    <select id="form-status">
+                        <option value="Abierta">Abierta</option>
+                        <option value="En progreso">En progreso</option>
+                        <option value="Resuelta">Resuelta</option>
+                    </select>
+                </label>
+
+                <label>
+                    Asset *
+                    <select id="form-asset" required>
+                        <option value="">Cargando...</option>
+                    </select>
+                </label>
+
+                <label>
+                    Asignado a
+                    <select id="form-assigned">
+                        <option value="">Sin asignar</option>
+                    </select>
+                </label>
+
+                <label>
+                    Fecha de descubrimiento *
+                    <input type="date" id="form-discovered" required>
+                </label>
+
+                <label>
+                    Fecha de resolución
+                    <input type="date" id="form-fixed">
+                </label>
+
+                <div class="form-actions">
+                    <button type="button" id="btn-cancel">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

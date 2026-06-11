@@ -1,0 +1,220 @@
+{
+    "info": {
+        "name": "ArqWeb",
+        "description": "Colección de requests para probar la API del Gestor de Vulnerabilidades.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000"
+        }
+    ],
+    "item": [
+        {
+            "name": "Vulnerabilities",
+            "item": [
+                {
+                    "name": "GET all",
+                    "request": {
+                        "method": "GET",
+                        "url": { "raw": "{{baseUrl}}/api/vulnerabilities", "host": ["{{baseUrl}}"], "path": ["api", "vulnerabilities"] }
+                    }
+                },
+                {
+                    "name": "GET filtered (status=Abierta, severity=Crítica)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/vulnerabilities?status=Abierta&severity=Crítica",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "vulnerabilities"],
+                            "query": [
+                                { "key": "status", "value": "Abierta" },
+                                { "key": "severity", "value": "Crítica" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "GET by id (1)",
+                    "request": {
+                        "method": "GET",
+                        "url": { "raw": "{{baseUrl}}/api/vulnerabilities/1", "host": ["{{baseUrl}}"], "path": ["api", "vulnerabilities", "1"] }
+                    }
+                },
+                {
+                    "name": "GET by id - not found (999)",
+                    "request": {
+                        "method": "GET",
+                        "url": { "raw": "{{baseUrl}}/api/vulnerabilities/999", "host": ["{{baseUrl}}"], "path": ["api", "vulnerabilities", "999"] }
+                    }
+                },
+                {
+                    "name": "POST create",
+                    "request": {
+                        "method": "POST",
+                        "header": [{ "key": "Content-Type", "value": "application/json" }],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"XSS almacenado en comentarios\",\n    \"description\": \"Los comentarios no escapan HTML al renderizarse\",\n    \"cve\": \"CVE-2024-99999\",\n    \"severity\": \"Alta\",\n    \"cvssScore\": 7.2,\n    \"status\": \"Abierta\",\n    \"assetId\": 1,\n    \"assignedTo\": 3,\n    \"discoveredAt\": \"2026-06-01\"\n}"
+                        },
+                        "url": { "raw": "{{baseUrl}}/api/vulnerabilities", "host": ["{{baseUrl}}"], "path": ["api", "vulnerabilities"] }
+                    }
+                },
+                {
+                    "name": "POST create - validation error (body vacío)",
+                    "request": {
+                        "method": "POST",
+                        "header": [{ "key": "Content-Type", "value": "application/json" }],
+                        "body": { "mode": "raw", "raw": "{}" },
+                        "url": { "raw": "{{baseUrl}}/api/vulnerabilities", "host": ["{{baseUrl}}"], "path": ["api", "vulnerabilities"] }
+                    }
+                },
+                {
+                    "name": "PUT update (1)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [{ "key": "Content-Type", "value": "application/json" }],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"SQL Injection en formulario de autenticación\",\n    \"description\": \"Vulnerabilidad mitigada con parámetros preparados\",\n    \"cve\": \"CVE-2023-45678\",\n    \"severity\": \"Crítica\",\n    \"cvssScore\": 9.8,\n    \"status\": \"Resuelta\",\n    \"assetId\": 2,\n    \"assignedTo\": 3,\n    \"discoveredAt\": \"2025-08-12\",\n    \"fixedAt\": \"2026-06-10\"\n}"
+                        },
+                        "url": { "raw": "{{baseUrl}}/api/vulnerabilities/1", "host": ["{{baseUrl}}"], "path": ["api", "vulnerabilities", "1"] }
+                    }
+                },
+                {
+                    "name": "DELETE (1)",
+                    "request": {
+                        "method": "DELETE",
+                        "url": { "raw": "{{baseUrl}}/api/vulnerabilities/1", "host": ["{{baseUrl}}"], "path": ["api", "vulnerabilities", "1"] }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Assets",
+            "item": [
+                {
+                    "name": "GET all",
+                    "request": {
+                        "method": "GET",
+                        "url": { "raw": "{{baseUrl}}/api/assets", "host": ["{{baseUrl}}"], "path": ["api", "assets"] }
+                    }
+                },
+                {
+                    "name": "GET filtered (criticality=Alta)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/assets?criticality=Alta",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "assets"],
+                            "query": [{ "key": "criticality", "value": "Alta" }]
+                        }
+                    }
+                },
+                {
+                    "name": "GET by id (1)",
+                    "request": {
+                        "method": "GET",
+                        "url": { "raw": "{{baseUrl}}/api/assets/1", "host": ["{{baseUrl}}"], "path": ["api", "assets", "1"] }
+                    }
+                },
+                {
+                    "name": "POST create",
+                    "request": {
+                        "method": "POST",
+                        "header": [{ "key": "Content-Type", "value": "application/json" }],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"redis-cache-01\",\n    \"type\": \"Base de datos\",\n    \"environment\": \"Producción\",\n    \"owner\": \"Juan Perez\",\n    \"criticality\": \"Alta\"\n}"
+                        },
+                        "url": { "raw": "{{baseUrl}}/api/assets", "host": ["{{baseUrl}}"], "path": ["api", "assets"] }
+                    }
+                },
+                {
+                    "name": "PUT update (1)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [{ "key": "Content-Type", "value": "application/json" }],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"apache 2.4\",\n    \"type\": \"Servidor\",\n    \"environment\": \"Producción\",\n    \"criticality\": \"Alta\"\n}"
+                        },
+                        "url": { "raw": "{{baseUrl}}/api/assets/1", "host": ["{{baseUrl}}"], "path": ["api", "assets", "1"] }
+                    }
+                },
+                {
+                    "name": "DELETE (1)",
+                    "request": {
+                        "method": "DELETE",
+                        "url": { "raw": "{{baseUrl}}/api/assets/1", "host": ["{{baseUrl}}"], "path": ["api", "assets", "1"] }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "GET all",
+                    "request": {
+                        "method": "GET",
+                        "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] }
+                    }
+                },
+                {
+                    "name": "GET by id (1)",
+                    "request": {
+                        "method": "GET",
+                        "url": { "raw": "{{baseUrl}}/api/users/1", "host": ["{{baseUrl}}"], "path": ["api", "users", "1"] }
+                    }
+                },
+                {
+                    "name": "POST create",
+                    "request": {
+                        "method": "POST",
+                        "header": [{ "key": "Content-Type", "value": "application/json" }],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Sofia Garcia\",\n    \"email\": \"sofia.garcia@empresa.com\",\n    \"role\": \"Analista de seguridad\"\n}"
+                        },
+                        "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] }
+                    }
+                },
+                {
+                    "name": "PUT update (1)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [{ "key": "Content-Type", "value": "application/json" }],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Juan Carlos Perez\",\n    \"email\": \"juan.perez@gmail.com\",\n    \"role\": \"Desarrollador\"\n}"
+                        },
+                        "url": { "raw": "{{baseUrl}}/api/users/1", "host": ["{{baseUrl}}"], "path": ["api", "users", "1"] }
+                    }
+                },
+                {
+                    "name": "DELETE (1)",
+                    "request": {
+                        "method": "DELETE",
+                        "url": { "raw": "{{baseUrl}}/api/users/1", "host": ["{{baseUrl}}"], "path": ["api", "users", "1"] }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Reports",
+            "item": [
+                {
+                    "name": "GET severity distribution",
+                    "request": {
+                        "method": "GET",
+                        "url": { "raw": "{{baseUrl}}/api/reports/severity-distribution", "host": ["{{baseUrl}}"], "path": ["api", "reports", "severity-distribution"] }
+                    }
+                }
+            ]
+        }
+    ]
+}

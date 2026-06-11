@@ -7,6 +7,84 @@ Trabajo Práctico Integrador — Arquitectura Web
 
 ---
 
+## Instalación y ejecución
+
+### Requisitos previos
+
+- Node.js 18 o superior
+- npm (incluido con Node.js)
+
+### Pasos para ejecutar
+
+1. Clonar el repositorio o descomprimir el archivo zip.
+2. Desde la raíz del proyecto, instalar las dependencias:
+```bash
+   npm install
+```
+3. Arrancar el servidor:
+```bash
+   npm start
+```
+4. La aplicación queda disponible en `http://localhost:3000`.
+
+### Uso
+
+- **Frontend** (interfaz gráfica): `http://localhost:3000/`
+- **API REST**: `http://localhost:3000/api/...`
+
+### Scripts disponibles
+
+| Comando | Descripción |
+|---------|-------------|
+| `npm start` | Inicia el servidor en el puerto 3000 |
+
+### Persistencia
+
+La persistencia de datos es **en memoria**. Al arrancar la aplicación se cargan automáticamente un set de datos por defecto (seed) con assets, usuarios y vulnerabilidades de ejemplo. Los datos creados o modificados durante la ejecución se pierden al reiniciar el servidor.
+
+### Stack tecnológico
+
+- **Backend**: Node.js + Express
+- **Frontend**: HTML + CSS + JavaScript (Vanilla)
+- **Sistema de módulos**: ES Modules (ESM)
+- **Testing**: Colección de Postman (`ArqWeb.postman_collection.json` en la raíz)
+
+### Estructura del proyecto
+
+```
+ArqWeb/
+├── index.js                    Punto de entrada del servidor
+├── package.json
+├── public/                     Frontend (servido como archivos estáticos)
+│   ├── index.html              CRUD de vulnerabilidades
+│   ├── reports.html            Pantalla de reportes
+│   ├── app.js                  Lógica del CRUD
+│   ├── reports.js              Lógica de reportes
+│   └── styles.css
+├── src/
+│   ├── routes/                 Definición de endpoints REST
+│   ├── controllers/            Manejo de requests HTTP
+│   ├── services/               Lógica de negocio y validaciones
+│   ├── repositories/           Acceso a los datos
+│   └── data/                   Datos en memoria + seed inicial
+├── ArqWeb.postman_collection.json
+└── README.md
+```
+
+### Arquitectura
+
+El backend sigue una **arquitectura en capas**:
+
+- **Routes**: declaran las URLs y verbos HTTP, delegan a controllers.
+- **Controllers**: extraen datos de los requests, llaman al service, traducen errores a status codes HTTP.
+- **Services**: contienen la lógica de negocio y validaciones; lanzan errores semánticos (`NotFoundError`, `ValidationError`) sin conocimiento de HTTP.
+- **Repositories**: encapsulan las operaciones sobre los datos (find, create, update, remove).
+- **Data**: arrays en memoria con el seed inicial y helpers para generación de IDs autoincrementales.
+
+El frontend es Vanilla JS sin frameworks. Consume la API REST mediante `fetch` con `async/await`. Como Express sirve los archivos estáticos del frontend desde la misma instancia que la API, ambos viven en el mismo origen (`localhost:3000`), lo que evita configuración de CORS y simplifica el deploy.
+
+---
+
 ## 1. Descripción del backend
 
 El backend es una **API RESTful** desarrollada en **Node.js** con el framework **Express**, que implementa un sistema de gestión de vulnerabilidades de seguridad informática. El sistema permite registrar, consultar, modificar y dar seguimiento al ciclo de vida de vulnerabilidades detectadas en los activos (servidores, aplicaciones, bases de datos, etc.) de una organización, así como asignar responsables para su remediación.
